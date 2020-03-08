@@ -1,0 +1,548 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="10"/>
+    <BuildModes Count="3" Active="Release">
+      <Item1 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="ftdigicontrol"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+            <TargetOS Value="linux"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDebug
+-dSimulator"/>
+            <OtherDefines Count="3">
+              <Define0 Value="Debug"/>
+              <Define1 Value="Verbose"/>
+              <Define2 Value="Simulator"/>
+            </OtherDefines>
+          </Other>
+        </CompilerOptions>
+      </Item1>
+      <Item2 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="ftdigicontrol"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDebug
+-dSimulator"/>
+            <OtherDefines Count="3">
+              <Define0 Value="Debug"/>
+              <Define1 Value="Verbose"/>
+              <Define2 Value="Simulator"/>
+            </OtherDefines>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Verbose">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <Target>
+            <Filename Value="ftdigicontrol"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <UnitOutputDirectory Value="lib/$(TargetCPU)-$(TargetOS)"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetOS Value="linux"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-dDebug
+-dSimulator"/>
+            <OtherDefines Count="3">
+              <Define0 Value="Debug"/>
+              <Define1 Value="Verbose"/>
+              <Define2 Value="Simulator"/>
+            </OtherDefines>
+          </Other>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <Units Count="35">
+      <Unit0>
+        <Filename Value="ftdigicontrol.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="36" Y="41"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="mainunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="MainUnit"/>
+        <TopLine Value="76"/>
+        <CursorPos X="41" Y="206"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="flDigiInterfaceUnit"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="362"/>
+        <CursorPos X="67" Y="400"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="codecs.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Codecs"/>
+        <EditorIndex Value="8"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="fuzzysearch.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="fuzzySearch"/>
+        <EditorIndex Value="7"/>
+        <UsageCount Value="201"/>
+        <Bookmarks Count="1">
+          <Item0 X="9" Y="158"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="progresshandling.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ProgressHandling"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="30" Y="16"/>
+        <UsageCount Value="90"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="create_documentation.txt"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="23" Y="11"/>
+        <UsageCount Value="326"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="/usr/share/fpcsrc/2.6.4/packages/fcl-web/src/base/fphttpclient.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="10"/>
+        <UsageCount Value="80"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="create_documentation"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="57" Y="9"/>
+        <UsageCount Value="174"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="introduction.txt"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="50"/>
+        <CursorPos X="5" Y="99"/>
+        <UsageCount Value="174"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="test_rpc.xml"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="30" Y="3"/>
+        <UsageCount Value="95"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="Eksempel på filoverføring.txt"/>
+        <EditorIndex Value="6"/>
+        <CursorPos X="13" Y="2"/>
+        <UsageCount Value="65"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="/usr/share/lazarus/1.6.4/components/fpweb/weblazideintf.pp"/>
+        <UnitName Value="WebLazIDEIntf"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="218"/>
+        <CursorPos X="26" Y="252"/>
+        <UsageCount Value="1"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="/usr/share/lazarus/1.6.4/ide/lazarus.pp"/>
+        <UnitName Value="Lazarus"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="1"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="/usr/share/lazarus/1.6.4/packager/packageeditor.pas"/>
+        <ComponentName Value="PackageEditorForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="PackageEditor"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="228"/>
+        <CursorPos X="65" Y="253"/>
+        <UsageCount Value="1"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="/usr/share/fpcsrc/3.0.2/rtl/objpas/sysutils/sysstrh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="217"/>
+        <CursorPos X="28" Y="248"/>
+        <UsageCount Value="4"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="/usr/share/fpcsrc/3.0.2/rtl/inc/systemh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="84"/>
+        <CursorPos X="3" Y="109"/>
+        <UsageCount Value="4"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="/usr/share/fpcsrc/3.0.2/rtl/linux/system.pp"/>
+        <UnitName Value="System"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos Y="22"/>
+        <UsageCount Value="4"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="/usr/share/lazarus/1.6.4/lcl/include/control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2701"/>
+        <CursorPos Y="2738"/>
+        <UsageCount Value="6"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="/usr/share/lazarus/1.8.2/components/fpweb/weblazideintf.pp"/>
+        <UnitName Value="WebLazIDEIntf"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="225"/>
+        <CursorPos X="7" Y="253"/>
+        <UsageCount Value="9"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/customtimer.pas"/>
+        <UnitName Value="CustomTimer"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="161"/>
+        <CursorPos Y="192"/>
+        <UsageCount Value="10"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/interfaces/gtk2/gtk2widgetset.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2670"/>
+        <CursorPos Y="2710"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/control.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="4978"/>
+        <CursorPos Y="5016"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/customlabel.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="195"/>
+        <CursorPos Y="227"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/custompage.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="202"/>
+        <CursorPos Y="227"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/customnotebook.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="378"/>
+        <CursorPos Y="403"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/wincontrol.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6465"/>
+        <CursorPos Y="6491"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/winapi.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="597"/>
+        <CursorPos Y="622"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/interfaces/gtk2/gtk2winapi.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6340"/>
+        <CursorPos Y="6381"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/interfaces/gtk2/gtk2proc.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="665"/>
+        <CursorPos Y="698"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/interfaces/gtk2/gtk2winapiwindow.pp"/>
+        <UnitName Value="Gtk2WinapiWindow"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="996"/>
+        <CursorPos Y="1028"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/customedit.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="75"/>
+        <CursorPos Y="101"/>
+        <UsageCount Value="10"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/include/custommemo.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="140"/>
+        <CursorPos Y="177"/>
+        <UsageCount Value="10"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/interfaces/gtk2/gtk2memostrings.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="224"/>
+        <CursorPos Y="252"/>
+        <UsageCount Value="10"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="/usr/share/lazarus/1.8.2/lcl/lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="742"/>
+        <CursorPos X="3" Y="761"/>
+        <UsageCount Value="9"/>
+      </Unit34>
+    </Units>
+    <OtherDefines Count="3">
+      <Define0 Value="Debug"/>
+      <Define1 Value="Verbose"/>
+      <Define2 Value="Simulator"/>
+    </OtherDefines>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="242" TopLine="217"/>
+      </Position1>
+      <Position2>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="321" TopLine="297"/>
+      </Position2>
+      <Position3>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="81" TopLine="58"/>
+      </Position3>
+      <Position4>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="171" TopLine="147"/>
+      </Position4>
+      <Position5>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="306" TopLine="281"/>
+      </Position5>
+      <Position6>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="302" Column="30" TopLine="285"/>
+      </Position6>
+      <Position7>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="253" Column="15" TopLine="229"/>
+      </Position7>
+      <Position8>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="254" Column="19" TopLine="236"/>
+      </Position8>
+      <Position9>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="278" Column="44" TopLine="268"/>
+      </Position9>
+      <Position10>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="259" Column="14" TopLine="235"/>
+      </Position10>
+      <Position11>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="437" Column="70" TopLine="414"/>
+      </Position11>
+      <Position12>
+        <Filename Value="codecs.pas"/>
+        <Caret Line="110" Column="74" TopLine="92"/>
+      </Position12>
+      <Position13>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="422" Column="43" TopLine="414"/>
+      </Position13>
+      <Position14>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="290" Column="46" TopLine="263"/>
+      </Position14>
+      <Position15>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="120" Column="15" TopLine="16"/>
+      </Position15>
+      <Position16>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="16" Column="21"/>
+      </Position16>
+      <Position17>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="419" Column="45" TopLine="411"/>
+      </Position17>
+      <Position18>
+        <Filename Value="fuzzysearch.pas"/>
+        <Caret Line="11" Column="96"/>
+      </Position18>
+      <Position19>
+        <Filename Value="codecs.pas"/>
+        <Caret Line="87" Column="73" TopLine="70"/>
+      </Position19>
+      <Position20>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="18" Column="5"/>
+      </Position20>
+      <Position21>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="113" TopLine="91"/>
+      </Position21>
+      <Position22>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="22" Column="39"/>
+      </Position22>
+      <Position23>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="39" Column="29"/>
+      </Position23>
+      <Position24>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="322" Column="9" TopLine="290"/>
+      </Position24>
+      <Position25>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="174" Column="8" TopLine="94"/>
+      </Position25>
+      <Position26>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="326" TopLine="299"/>
+      </Position26>
+      <Position27>
+        <Filename Value="mainunit.pas"/>
+        <Caret Line="120" Column="88" TopLine="107"/>
+      </Position27>
+      <Position28>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="385" Column="49" TopLine="369"/>
+      </Position28>
+      <Position29>
+        <Filename Value="fldigiinterfaceunit.pas"/>
+        <Caret Line="244" Column="18" TopLine="233"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <Watches Count="3">
+      <Item1>
+        <Expression Value="BufferZeroPosition"/>
+      </Item1>
+      <Item2>
+        <Expression Value="BufferNowPosition"/>
+      </Item2>
+      <Item3>
+        <Expression Value="manipulations"/>
+      </Item3>
+    </Watches>
+  </Debugging>
+</CONFIG>

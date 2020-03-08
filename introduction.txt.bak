@@ -1,0 +1,99 @@
+@shorttitle(Introduction)
+@title(General introduction to the application)
+
+@author Bent Vangli (LA9RT)
+
+@section(1 license Licence)
+
+Distributed under the GNU General Public License version 3 or later.
+This is free software. You are free to change and redistribute it.
+There is absolutely NO WARRANTY.
+
+@section(1 functionality Main functionality)
+
+This application is intended to interface the superb Fldigi @(Fast and Light Digital modem program
+Copyright © 2008-2012 Dave Freese, Stelios Bounanos, Leigh Klotz, Remi Chateauneu, and others@).
+
+Doing this, I can focus on the functionality in this application, and let the really complex part
+be handled by Fldigi, covering Rig interface, different digital modes and so on. This application
+is utilizing the Fldigi's XML-RPC protocoll.
+
+@section(1 process Workflow of operation)
+
+The following diagram describes the main flow in the application, preferabel using Fldigi:
+@preformatted(
+
+┌──────────────────┐
+│ Normal digital   │
+│ communication to │
+│ aggree of doing  │  ⇒
+│ a filetransfer   │
+└──────────────────┘
+
+ Much more to be done....
+
+┌─────────────────────┐
+│      Template       │    →↑←↓↔↕↖↗↘↙
+├─────────────────────┤    ⇒⇑⇐⇓⇔⇕⇖⇗⇘⇙
+└─────────────────────┘
+
+)
+
+The main concept is that each line of data transmitted has to be acknowledged. If not,
+a retransmission will be forced for that spesific sequence line after a timeout period.
+
+
+@section(1 formats Format of communication)
+
+This format is created to minimize the transmission speed using PSK. Binary transfer
+needs to be converted to a byte stream which is transportable using the alpabeth set
+used in PSK. Further on, this representation is choosed to be the shortest one possible,
+to optimize size and thereby speed.
+
+A communication session is separated into one ore more transmission of packets, which
+individually has to be acknowledged. Each packet consist of separate sequences, which
+gives greater granularity to acknowledge, thus decreasing the need for retransmission
+if only some sequences aren't received perfectly. Each sequence consist of a packet number,
+a sequence number, payload and CRC32 check sum. As such, the hole concept is scalable
+from ultralow to extreme high transmission speed, only dependent of the parametres of
+the underlaying transmission system.
+
+A typical small transfer looks like:
+
+Give an example.......
+
+@section(2 header The header used to start a filetransefer)
+After some human readable text which marks the start of transmission, one or more
+special formatted datasequences will be transmittet. The packet number for those
+special packets are always 0 - zero, representet with eight o's. The following
+sequence number then defines the type of meaning.
+
+This sequence is encoded with filename, size of
+file, how many packets which will be transmittet and base size of each packet. This
+size does not include retransmitted datasequences.
+
+More to come..
+
+@section(2 body The body of filetransfer)
+The body consist of one special sequence line with some key information used at
+the receiving end to keep track of the progress.
+
+Then follows several lines and packets containing the binary file to be transfered.
+
+Bla bla...
+
+@section(2 endtag Finish line of a filetransfer)
+blabla..
+
+
+@section(1 commentsformat Different comment styles used in the source code)
+
+The code is commentet using all three standard methods:
+
+'//', '{ }' and '(* og *)'
+
+to enter comments in the code. The use is dependent, and '(* *)' is used where
+it is necessary to use { and } in the comment text.
+
+
+More to come....

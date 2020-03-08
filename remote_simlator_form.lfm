@@ -1,0 +1,56 @@
+object Remote_station_simulator_Form: TRemote_station_simulator_Form
+  Left = 105
+  Height = 633
+  Top = 363
+  Width = 1047
+  Caption = 'Remote_station_simulator_Form'
+  ClientHeight = 633
+  ClientWidth = 1047
+  DesignTimePPI = 95
+  OnCreate = FormCreate
+  LCLVersion = '2.0.6.0'
+  object Simulator_Receive_Memo: TMemo
+    Left = 8
+    Height = 145
+    Hint = 'Shows raw message received.'
+    Top = 8
+    Width = 800
+    Lines.Strings = (
+      'Simulator_Receive_Memo'
+    )
+    ReadOnly = True
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object Simulator_Decoded_Memo: TMemo
+    Left = 8
+    Height = 145
+    Hint = 'Shows decoded received message'
+    Top = 160
+    Width = 800
+    Lines.Strings = (
+      'Simulator_Decoded_Memo'
+    )
+    TabOrder = 1
+  end
+  object Simulator_Response_Memo: TMemo
+    Left = 8
+    Height = 145
+    Top = 328
+    Width = 800
+    Lines.Strings = (
+      'Simulator_Response_Memo'
+    )
+    TabOrder = 2
+  end
+  object Simulator_Encoded_Memo: TMemo
+    Left = 8
+    Height = 145
+    Top = 480
+    Width = 800
+    Lines.Strings = (
+      'Simulator_Encoded_Memo'
+    )
+    TabOrder = 3
+  end
+end

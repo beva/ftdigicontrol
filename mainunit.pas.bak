@@ -1,0 +1,478 @@
+unit MainUnit;
+{< @abstract(Main program unit.)
+
+   Please see compiler option to undefine Debug, Verbose and Simluator mode. }
+
+{$mode objfpc}{$H+}
+
+interface
+
+uses
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls, ActnList,
+  Menus, XMLPropStorage, ExtCtrls, LCLType, ComCtrls, flDigiInterfaceUnit,
+  Codecs, fuzzySearch, strutils, math, ProgressHandling;
+
+const
+  VERSION = 'Version 0.0.19 - Developement, fpc 3.0.4, Lazarus 1.8.2'; //< Version information.
+  LF      = Chr(10);           //< Linux linefeed
+  {$ifdef Debug}
+    VERSIONTYPE = ' - Debug version';
+  {$else}
+    VERSIONTYPE = '';
+  {$endif}
+//  DEBUG   : boolean = true;    //< If true, show and create internal debug information.
+
+type
+
+  { TMainForm }
+  TMainForm = class(TForm)
+    AFCCheckBox: TCheckBox;
+    Label2: TLabel;
+    ProgressShape: TShape;
+    TestFuzzyButton: TButton;
+    MyCallEditFileTransfer: TEdit;
+    RemoteCallEditFileTransfer: TEdit;
+    FileNameLabelStatic: TLabel;
+    FileSizeLabelStatic: TLabel;
+    FileNameLabelDynamic: TLabel;
+    FileSizeLabelDynamic: TLabel;
+    Label1: TLabel;
+    RemoteCallLabelFileTransfer: TLabel;
+    MyCallLabelFileTransfer: TLabel;
+    MainInfoMemo: TMemo;
+    PacketInfoMemo: TMemo;
+    PacketUserInfoLabelStatic: TLabel;
+    MainUserInfoLabelStatic: TLabel;
+    ModemLabelDynamic: TLabel;
+    ModemLabelStatic: TLabel;
+    PacketCountLabelDynamic: TLabel;
+    PacketCountLabelStatic: TLabel;
+    PacketCountSequencesRadioGroup: TRadioGroup;
+    SequenceByteCountRadioGroup: TRadioGroup;
+    ReceiveFileButton: TButton;
+    SendFileButton: TButton;
+    ReceiveFileMenuItem: TMenuItem;
+    MainPageControl: TPageControl;
+    ReceiveFileAction: TAction;
+    CommunicateMenuItem: TMenuItem;
+    SendFileMenuItem: TMenuItem;
+    OpenDialog: TOpenDialog;
+    SendFileAction: TAction;
+    Button1: TButton;
+    FileMenuItem: TMenuItem;
+    ExitMenuItem: TMenuItem;
+    MainTabSheet: TTabSheet;
+    FileTransferTabSheet: TTabSheet;
+    DebugTabSheet: TTabSheet;
+    TestButton: TButton;
+    ExitAction: TAction;
+    MainActionList: TActionList;
+    MainMemo: TMemo;
+    MainMenu: TMainMenu;
+    HeaderMemo: TMemo;
+    XMLPropStorage: TXMLPropStorage;
+    procedure AFCCheckBoxChange(Sender: TObject); //< Control Fldigi's AFC function.
+    procedure ExitActionExecute(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
+    procedure MyCallEditFileTransferChange(Sender: TObject);
+    procedure PacketCountSequencesRadioGroupSelectionChanged(Sender: TObject);
+    procedure ReceiveFileActionExecute(Sender: TObject);
+    procedure ReceiveFileButtonClick(Sender: TObject);
+    procedure RemoteCallEditFileTransferChange(Sender: TObject);
+    procedure SendFileActionExecute(Sender: TObject);
+    procedure SequenceByteCountRadioGroupClick(Sender: TObject);
+    procedure SequenceByteCountRadioGroupSelectionChanged(Sender: TObject);
+    procedure TestButtonClick(Sender: TObject);
+    procedure TestFuzzyButtonClick(Sender: TObject);
+  private
+    HTTPClient     : THTTPClient;
+    LastMessage    : string; //< Internal temporary storage
+    MyCallSign     : string; //< Used to store own callsign. Automatically fetched from Fldigi, but may be overwritten. { TODO 1 -oBent : Lag denne til en property med funksjonalitet for enkel oppdatering. }
+    RemoteCallSign : string; //< Used to store remote callsign. Automatically fetched from Fldigi, but may be overwritten. { TODO 1 -oBent : Lag denne til en property med funksjonalitet for enkel oppdatering. }
+    procedure eventUpdateReceiveInformation(MatchStatus: TTrigInfo); //< This procedure is an event handler, triggered from fuzzySearch.
+
+  public
+    { public declarations }
+  end;
+
+var
+  MainForm: TMainForm;
+
+implementation
+
+{$R *.lfm}
+
+{ TMainForm }
+
+procedure TMainForm.ExitActionExecute(Sender: TObject);
+begin
+  Application.Terminate;
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+  Caption := 'flDigi Control - '+VERSION;
+  {$ifdef Debug}
+    Caption := Caption + ' - Debug version';
+  {$endif}
+  HTTPClient := THTTPClient.Create(nil);
+  SequenceByteCountRadioGroupSelectionChanged(Sender);            // Set default count.
+  PacketCountSequencesRadioGroupSelectionChanged(Sender);         // Set default count.
+  ModemLabelDynamic.Caption       := HTTPClient.fetchModemName;   // Read from fldigi and show.
+  {$ifdef Debug}
+    DebugTabSheet.TabVisible        := true;                      // Only show when in debug mode.
+  {$else}
+    DebugTabSheet.TabVisible        := false;                     // Only show when in debug mode
+  {$endif}
+
+  MyCallSign                      := HTTPClient.fetchOwnCallSign; // Fetch own call sign from Fldigi.
+  RemoteCallSign                  := HTTPClient.fetchCallSign;    // Fetch remote call sign from Fldigi. May be blank.
+  MyCallEditFileTransfer.Text     := MyCallSign;                  // Show it in editable field.
+  RemoteCallEditFileTransfer.Text := RemoteCallSign;              // Show it in editable field.
+  AFCCheckBox.Checked             := HTTPClient.getAFC;           // Update Fldigi AFC status.
+end;
+
+procedure TMainForm.FormDestroy(Sender: TObject);
+begin
+  HTTPClient.Free;
+end;
+
+procedure TMainForm.MyCallEditFileTransferChange(Sender: TObject);
+begin
+  MyCallSign := MyCallEditFileTransfer.Text;
+end;
+
+procedure TMainForm.PacketCountSequencesRadioGroupSelectionChanged(Sender: TObject);
+begin
+  case PacketCountSequencesRadioGroup.ItemIndex of
+    0 : HTTPClient.FTI.SequenceCount := 2;
+    1 : HTTPClient.FTI.SequenceCount := 4;
+    2 : HTTPClient.FTI.SequenceCount := 8;
+    3 : HTTPClient.FTI.SequenceCount := 16;
+    4 : HTTPClient.FTI.SequenceCount := 32;
+    5 : HTTPClient.FTI.SequenceCount := 64;
+  end;
+end;
+
+procedure TMainForm.ReceiveFileActionExecute(Sender: TObject);
+begin
+  HTTPClient.StartListeningRX := true; // Prepare for RX widget listening
+end;
+
+procedure TMainForm.ReceiveFileButtonClick(Sender: TObject);
+begin
+  // Set up receive mode
+end;
+
+procedure TMainForm.RemoteCallEditFileTransferChange(Sender: TObject);
+begin
+  RemoteCallSign := RemoteCallEditFileTransfer.Text;
+end;
+
+procedure TMainForm.AFCCheckBoxChange(Sender: TObject);
+begin
+  LastMessage := HTTPClient.setAFC(AFCCheckBox.Checked);
+end;
+
+procedure TMainForm.SendFileActionExecute(Sender: TObject);
+var
+  Filestring : string;
+  Filestream : TFileStream;
+  SizeOfFile : integer;
+  EncStrings : TStringList;
+  Acks       : TStringList;
+  teller     : integer;
+  Reply,BoxStyle : integer;
+  MyMessage      : string;
+  Tempint    : integer;
+  Tempint2   : integer; // Local counter
+  PacketNrStr: string;  // Used to store packet number as a string
+begin
+  if OpenDialog.Execute then
+  begin
+    Filestring := '';
+    SizeOfFile := FileSize(OpenDialog.FileName);
+    BoxStyle   := MB_OKCANCEL;
+    MyMessage  := 'Your file: '+OpenDialog.FileName+chr(10)+
+                  'has the size: '+IntToStr(SizeOfFile)+' bytes.';
+    Reply := Application.MessageBox(PChar(MyMessage),'Confirm choice',Boxstyle);
+    if Reply = IDOK then
+    begin
+      SetLength(Filestring,SizeOfFile); { TODO 1 -oBent : Her kan jeg nok gjøre ting litt lurere med bruk av property og lignende. }
+      HTTPClient.FTI.Filename      := OpenDialog.FileName;
+      FileNameLabelDynamic.Caption := ExtractFileName(OpenDialog.FileName);
+      HTTPClient.FTI.FileSize      := SizeOfFile;
+      FileSizeLabelDynamic.Caption := IntToStr(SizeOfFile);
+      Filestream                   := TFileStream.Create(OpenDialog.FileName,fmOpenRead);
+      Tempint                      := HTTPClient.FTI.SequenceCount * HTTPClient.FTI.BytesInSeq;
+      HTTPClient.FTI.PacketCount   := SizeOfFile div Tempint;
+      if (SizeOfFile mod Tempint) > 0 then Inc(HTTPClient.FTI.PacketCount);
+      PacketCountLabelDynamic.Caption := IntToStr(HTTPClient.FTI.PacketCount);
+      try
+        Filestream.Position := 0;
+        FileStream.Read(Filestring[1],SizeOfFile);
+      finally
+        Filestream.Free;
+      end;
+      Application.ProcessMessages;
+      EncStrings := TStringList.Create;
+      Acks       := TStringList.Create;
+      try
+        HTTPClient.clearTXWidget;
+        encodePSKSpecialText(Filestring, EncStrings, HTTPClient.FTI.SequenceCount, HTTPClient.FTI.BytesInSeq);
+        {$ifdef Debug}
+            MainMemo.Lines := EncStrings;
+        {$endif}
+        MyMessage  := LF + LF + 'eee eee eee eee ' +
+                      RemoteCallSign + ' de ' + MyCallSign + ' ' +
+                      'eee eee eee eee' + LF +
+                      'Test of filetransfer.' + LF +
+                      'File: ' + OpenDialog.FileName + LF +
+                      'Size: ' + IntToStr(SizeOfFile) + ' bytes' + LF;
+        LastMessage := HTTPClient.PutMessage(MyMessage);
+        {$ifdef Debug}
+          MainMemo.append(MyMessage);
+        {$endif}
+        for teller := 0 to EncStrings.Count - 1 do
+        begin
+          Tempint := teller mod HTTPClient.FTI.SequenceCount;
+          if Tempint = 0 then
+          begin
+            PacketNrStr := IntToStr((teller div HTTPClient.FTI.SequenceCount) + 1);
+            MyMessage := LF + RemoteCallSign + ' de ' + MyCallSign + LF
+              + 'eee eee eee eee Packet '
+              + PacketNrStr
+              + ' of '
+              + IntToStr(HTTPClient.FTI.PacketCount)
+              + ' eee eee eee eee';
+            HTTPClient.PutMessage(MyMessage + LF);
+            {$ifdef Debug}
+              MainMemo.Append(MyMessage);
+            {$endif}
+          end;
+          if teller = 0 then
+          begin
+            MyMessage := formatPSKSingleLine(IntToStr(SizeOfFile) + ',' +
+              IntToStr(HTTPClient.FTI.PacketCount) + ',' +
+              IntToStr(HTTPClient.FTI.SequenceCount) + ',' +
+              IntToStr(HTTPClient.FTI.BytesInSeq) + ',' +
+              ExtractFileName(HTTPClient.FTI.Filename),
+              0,FLTYPE_FILETRANSFER);
+            LastMessage := HTTPClient.PutMessage(MyMessage + LF);
+//            RXWidgetTimer.Enabled := true;
+            {$ifdef Debug}
+              MainMemo.Append(MyMessage);
+            {$endif}
+          end;
+          LastMessage := HTTPClient.PutMessage(EncStrings.Strings[teller]+LF);
+          {$ifdef Debug}
+            MainMemo.Append(EncStrings.Strings[teller]);
+          {$endif}
+          Tempint := (teller + 1) mod HTTPClient.FTI.SequenceCount;    // Prepare for check of last sequence in packet,
+          if (Tempint = 0) and (teller <= (EncStrings.Count - 1)) then // then it's more packets to come.
+          begin
+            MyMessage := 'ee ee ee ee End of Packet '
+              + PacketNrStr
+              + ' of '
+              + IntToStr(HTTPClient.FTI.PacketCount)
+              + ' ee ee ee ee' + LF + 'btu ' + RemoteCallSign + ' de ' + MyCallSign + ' k' + LF;
+            LastMessage := HTTPClient.PutMessage(MyMessage);
+            {$ifdef Debug}
+              MainMemo.Append(MyMessage);
+            {$endif}
+            HTTPClient.PutRXTag;
+            LastMessage := HTTPClient.GetMessage(false); // Just to empty the receive que to avoid garbled information
+            HTTPClient.Transmitt;                        // Sending packet and wait for ack when transmission is finished.
+            Label1.Caption := 'Transmitt';
+            Label1.Color := clRed;
+            MainInfoMemo.Clear;
+            MainInfoMemo.Append('Transmitting file to ' + RemoteCallSign);
+            PacketInfoMemo.Clear;
+            PacketInfoMemo.Append('Sending packet number ' + PacketNrStr + ' of ' + IntToStr(HTTPClient.FTI.PacketCount));
+            Application.ProcessMessages;
+            sleep(1500);          // Let Fldigi have some time to start sending before looping to see when finished.
+            repeat
+              begin
+                for Tempint2 := 1 to 50 do
+                begin
+                  sleep(20); // A short sleeping time in the the loop make the system more responsive.
+                  { TODO 1 -oBent : Legg til kode for å muliggjøre avbryting av sending }
+                  Application.ProcessMessages;
+                end;
+              end;
+            until HTTPClient.getTransceiverTXMode <> 'tx';
+            LastMessage := HTTPClient.clearTXWidget;
+            Label1.Caption := 'Receiving';
+            Label1.Color := clGreen;
+            Application.ProcessMessages;
+            HTTPClient.waitforAck(Acks);
+          end;
+        end;
+        MyMessage := 'eeee eeee eeee eeee End of Filetransfer de '
+                   + MyCallSign + ' eeee eeee eeee eeee' + LF
+                   + RemoteCallSign + ' de ' + MyCallSign + ' k';
+        LastMessage := HTTPClient.PutMessage(MyMessage + LF);
+        {$ifdef Debug}
+          MainMemo.Append(MyMessage);
+        {$endif}
+        HTTPClient.PutRXTag;
+        LastMessage := HTTPClient.GetMessage(false); // Just to empty receive que to avoid garbled information
+        HTTPClient.Transmitt;
+        Label1.Caption := 'Transmitt';
+        Label1.Color := clRed;
+        MainInfoMemo.Clear;
+        MainInfoMemo.Append('Transmitting last packet to ' + RemoteCallSign);
+        PacketInfoMemo.Clear;
+        PacketInfoMemo.Append('Sending packet number ' + PacketNrStr + ' of ' + IntToStr(HTTPClient.FTI.PacketCount));
+        PacketInfoMemo.Append('This is the last packet to send');
+        Application.ProcessMessages;
+        Sleep(1500);          // Let Fldigi have some time to start sending before looping to see when finished.
+        repeat
+          begin
+            for Tempint2 := 1 to 50 do // Takes about 1 second
+            begin
+              sleep(20); // This loop make the system more responsive.
+            end;
+          end;
+        until HTTPClient.getTransceiverTXMode <> 'tx';
+        LastMessage := HTTPClient.clearTXWidget;
+        Label1.Caption := 'Receiving';
+        Label1.Color := clGreen;
+        MainInfoMemo.Clear;
+        MainInfoMemo.Append('Finished transmission of file to ' + RemoteCallSign);
+        MainInfoMemo.Append('Waiting for ackowledgement');
+        PacketInfoMemo.Clear;
+        PacketInfoMemo.Append('All ' + IntToStr(HTTPClient.FTI.PacketCount) + ' packets sent');
+        Application.ProcessMessages;
+        HTTPClient.waitforAck(Acks);
+        { TODO 1 -oBent -cFiletransfer: Utvid her med test for mottak av bekreftelse. }
+      finally
+        EncStrings.Free;
+        Acks.Free;
+      end;
+    end;
+  end;
+end;
+
+procedure TMainForm.SequenceByteCountRadioGroupClick(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.SequenceByteCountRadioGroupSelectionChanged(Sender: TObject );
+begin
+  case SequenceByteCountRadioGroup.ItemIndex of
+    0 : HTTPClient.FTI.BytesInSeq := 8;
+    1 : HTTPClient.FTI.BytesInSeq := 16;
+    2 : HTTPClient.FTI.BytesInSeq := 32;
+    3 : HTTPClient.FTI.BytesInSeq := 64;
+  end;
+end;
+
+procedure TMainForm.TestButtonClick(Sender: TObject);
+var
+  testListe : TStringList;
+  teststring: string;
+begin
+  { Testprosedyrer }
+  testListe  := TStringList.Create;
+  try
+    MainMemo.Clear;
+    teststring := HTTPClient.fetchOwnCallSign;
+    MainMemo.Append(teststring);
+    MainMemo.Append(deformatPSKCodedDatastring('rdttihumtdrurtroittotmiusesitoss'));
+    MainMemo.Append(deformatPSKCodedDatastring('sususisusitopssuptpisnsrslsctorp'));
+    MainMemo.Append(HTTPClient.getTransceiverTXMode);
+  finally
+    testListe.Free;
+  end;
+end;
+
+procedure TMainForm.eventUpdateReceiveInformation(MatchStatus: TTrigInfo);
+var
+  N1,N2 : integer;
+begin
+  case MatchStatus.TriggerCode of
+    FOUND_COM_TRANS_START : begin
+                              RemoteCallEditFileTransfer.Caption := MatchStatus.Info1;
+                              RemoteCallSign := MatchStatus.Info1;
+                              MainInfoMemo.Caption := MatchStatus.Info2;
+                              // MainInfoMemo.Append('Posisjon: ' + IntToStr(MatchStatus.Number1)); // For testing
+                              // MainInfoMemo.Append('Bufferstørrelse: ' + IntToStr(MatchStatus.Number2)); // For testing
+                              // MainInfoMemo.Append('Samsvarslengde: ' + IntToStr(MatchStatus.Number3)); // For testing
+                            end;
+    FOUND_COM_RECORD      : begin
+                              if (MatchStatus.PackNr = 0) and (MatchStatus.SeqNr = 0) then // Header sequence
+                              begin
+                                PacketInfoMemo.Caption          := MatchStatus.Info1;
+                                FileNameLabelDynamic.Caption    := ExtractDelimited(5,MatchStatus.Info1,[',']);
+                                FileSizeLabelDynamic.Caption    := ExtractDelimited(1,MatchStatus.Info1,[',']);
+                                PacketCountLabelDynamic.Caption := ExtractDelimited(2,MatchStatus.Info1,[',']);
+                                N1 := round(log2(StrToInt(ExtractDelimited(3,MatchStatus.Info1,[','])))) - 1; // Sequence count par packet adjustet to index
+                                N2 := round(log2(StrToInt(ExtractDelimited(4,MatchStatus.Info1,[','])))) - 3; // Sequence size adjustet to index
+                                PacketCountSequencesRadioGroup.ItemIndex := N1;
+                                PacketCountSequencesRadioGroup.Color     := clMoneyGreen;
+                                SequenceByteCountRadioGroup.ItemIndex    := N2;
+                                SequenceByteCountRadioGroup.Color        := clMoneyGreen;
+                              end
+                              else // Data sequence
+                              begin
+                                //
+                              end;
+                            end;
+  end;
+end;
+
+{ Testfunksjon som brukes for utvikling av Fuzzy Search algoritm }
+procedure TMainForm.TestFuzzyButtonClick(Sender: TObject);
+var
+  testFuzzSearch : TFuzzSearch;
+  testdecoded    : TDecodedInfo;
+  testReceive    : TStringList;
+  testProgDraw   : TMyDrawingControl;
+  Counter        : integer;
+begin
+  testFuzzSearch := TFuzzSearch.Create;
+  testReceive    := TStringList.Create;
+  try
+    MainMemo.Clear;
+    MainMemo.Append('Test på fuzzy search');
+    MainMemo.Append('----------------------------------------------');
+    MainMemo.Append('Legger til: "Dette er en test."');
+    testFuzzSearch.AddString := 'Dette er en test.';
+    MainMemo.Append('Bufferlengde: ' + IntToStr(testFuzzSearch.UsedBuffer));
+    MainMemo.Append('Legger til: " Ord."');
+    testFuzzSearch.AddString := ' Ord.';
+    MainMemo.Append('Bufferlengde: ' + IntToStr(testFuzzSearch.UsedBuffer));
+    MainMemo.Append('Buffertekst: ' + testFuzzSearch.Buffertext);
+    MainMemo.Append('Decode: oooooooooooooooo rirnrttcrttcrmtcrrrttcifpopoprsupipitoslpstosepntosdslprshsnsetepipmpi ceemosuf');
+    testdecoded := decodePSKSequenceLine('oooooooooooooooo rirnrttcrttcrmtcrrrttcifpopoprsupipitoslpstosepntosdslprshsnsetepipmpi ceemosuf');
+    MainMemo.Append(testdecoded.DecodedString);
+    MainMemo.Append('Laster testmottak.');
+    testReceive.LoadFromFile('Eksempel på filoverføring.txt');
+    testFuzzSearch.ResetBuffer;
+    testFuzzSearch.OnTriggMatch := @eventUpdateReceiveInformation;
+    for Counter := 0 to 10 do
+//    for Counter := 0 to testReceive.Count - 1 do
+    begin
+      MainMemo.Append(testReceive.Strings[Counter]);
+      testFuzzSearch.AddString := testReceive.Strings[Counter];
+      MainMemo.Append('Brukt buffer: ' + IntToStr(testFuzzSearch.UsedBuffer) + ' bytes.');
+      if testFuzzSearch.foundFuzzyMatch(0,0) then {adjust buffer};
+    end;
+  finally
+    testReceive.Free;
+    testFuzzSearch.Free;
+  end;
+  testProgDraw := TMyDrawingControl.Create(ProgressShape);
+  testProgDraw.Paint;
+  Application.ProcessMessages;
+  sleep(2000);
+  testProgDraw.Free;
+//  ProgressShape.Pen. := 5;
+end;
+
+
+end.
+

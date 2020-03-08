@@ -1,0 +1,5 @@
+# Ignored files
+backup/*
+lib/*
+html_doc/*
+ftdigicontrol

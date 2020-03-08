@@ -1,0 +1,20 @@
+#!/bin/bash
+echo Genererer dokumentasjon.
+/home/beva/Pascal/pasdoc/bin/pasdoc -E html_doc\
+    --include-creation-time\
+    --write-uses-list\
+    --introduction=introduction.txt\
+    --link-gv-uses png\
+    --link-gv-classes png\
+    --graphviz-uses\
+    --graphviz-classes\
+    --visible-members protected,public,published,private\
+    ftdigicontrol.lpr\
+    mainunit.pas\
+    fldigiinterfaceunit.pas\
+    codecs.pas\
+    fuzzysearch.pas\
+    remote_simulator.pas
+dot -Grankdir=LR -T png html_doc/GVUses.dot > html_doc/GVUses.png
+dot -Grankdir=LR -T png html_doc/GVClasses.dot > html_doc/GVClasses.png
+

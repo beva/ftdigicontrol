@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<methodCall>
+  <methodName>main.get_trx_status</methodName>
+  <params>
+  </params>
+</methodCall>

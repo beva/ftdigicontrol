@@ -1,0 +1,57 @@
+Denne linjen er skrapdata som brukes for test.
+eee eee eee eee ZZ1ZZ de LA9RT eee eee eee eee
+Test of filetransfer.
+File: /home/beva/Dokumenter/Oppsett av ny maskin.txt
+Size: 492 bytes
+
+ZZ1ZZ de LA9RT
+eee eee eee eee Packet 1 of 4 eee eee eee eee
+oooooooooooooooo rirnrttcritcrmtcrlrstcifpopoprsupipitoslpstosepntosdslprshsnsetepipmpi polmrtro
+oooooooloooooool prpusisftoslpopitdslsisitdptsupo fansmlna
+ooooooolooooooot sfprsnpisfptpntopoposlrapustpuse pednocer
+ooooooolooooooor piputdsdslpisutdsisupstfpoposloa nfeshsrl
+oooooooloooooooi prpusisftoslpopitdslsisitdptsupo icldnipi
+ooooooolooooooou sfprsnpisfptpntopoposlrapustpuse uauhuddu
+ooooooolooooooos piputdsdslpisutdsisupstfpupisfpo doffppsm
+ooooooolooooooop snsrtdsdslpisuoaprpusisftoslpopi tspfouih
+ooooooolooooooom tdspsupitopuposislpisuoaprpusisf urmodfir
+ee ee ee ee End of Packet 1 of 4 ee ee ee ee
+btu ZZ1ZZ de LA9RT k
+
+ZZ1ZZ de LA9RT
+eee eee eee eee Packet 2 of 4 eee eee eee eee
+oooooootoooooool toslpopitdspsupitosnseprpislscsc tfiucuus
+oooooootooooooot tosdslpisutdsisuprshpisfpotdsuse ftdusapd
+oooooootooooooor pssnptsfsesdsusepitdsrsfptsuoaoa csoifcut
+oooooootoooooooi prpusisftoslpopitdspsupitosnsepr esruudud
+oooooootooooooou pislscsctosssnsespsuptoaoaoasisu aieseeth
+oooooootooooooos sttosmpipiporatftfpoposltescslpu hlefannd
+oooooootooooooop sesrsmposlsitesesupitfscsnstptsu pralmtdu
+oooooootooooooom sfsssssnsrsutfpoposltfpustpusepi einotlur
+ee ee ee ee End of Packet 2 of 4 ee ee ee ee
+btu ZZ1ZZ de LA9RT k
+
+ZZ1ZZ de LA9RT
+eee eee eee eee Packet 3 of 4 eee eee eee eee
+oooooooroooooool putoppsnscpntosdslsnsetooasisust tiedfoso
+ooooooorooooooot tdprptsrtosmpipiporatftfpoposlte rdcthuni
+ooooooorooooooor scslpusesrsmposlsitesesupitfscsn dicsnrcm
+oooooooroooooooi stptsusfsssssnsrsutfpoposltfpust orctsprt
+ooooooorooooooou pusepiputoppsnscpntosdslsnsetooa cudfsluh
+ooooooorooooooos oaprpusisftoslsisitdslpopitdptsu hfrplcdp
+ooooooorooooooop posfprsnpisfptpntopoposlrascsnst pupndctn
+ooooooorooooooom ptsusfsssssnsrsutfpoposloaprpusi spcertat
+ee ee ee ee End of Packet 3 of 4 ee ee ee ee
+btu ZZ1ZZ de LA9RT k
+
+ZZ1ZZ de LA9RT
+eee eee eee eee Packet 4 of 4 eee eee eee eee
+oooooooioooooool sftoslpopitdspsupitopuposislpisu ilidetha
+oooooooiooooooot oaoaoaissfpttopsslscsnsislpisnsf mmeuohdt
+oooooooiooooooor setosfsstoirururtfimuiidictfumid tdpmdmsf
+oooooooioooooooi ictosisfsrpusdsusepiprtopnsfputo pemafmmu
+oooooooiooooooou sesususitosrprprpisnsipntctopisn drlfhlce
+oooooooiooooooos sipntctoppsustscsnsepioaslsesitf rirlonnf
+eeee eeee eeee eeee End of Filetransfer de LA9RT eeee eeee eeee eeee
+ZZ1ZZ de LA9RT k
+
